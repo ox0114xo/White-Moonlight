@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>白月光甜蜜制販所 - 終極美學點餐系統</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ==========================================
+           🎨 白月光極致美學 CSS
+           ========================================== */
+        :root {
+            --primary-text: #2c3e50; 
+            --accent-gold: #D4AF37; 
+            --bg-color: #f8f9fa;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        * { box-sizing: border-box; font-family: 'Quicksand', 'Noto Serif TC', serif; scroll-behavior: smooth; }
+        
+        body { 
+            margin: 0; padding: 0; color: var(--primary-text); height: 100vh; overflow: auto;
+            background: linear-gradient(-45deg, #fdfbfb, #ebedee, #f3e7e9, #e3eeff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex; flex-direction: column;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-panel {
+            background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); border-radius: 20px;
+        }
+
+        /* 頂部導覽與 Logo */
+        header {
+            display: flex; align-items: center; justify-content: center; padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px); z-index: 10;
+        }
+        
+        .logo-img {
+            width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-right: 15px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+
+        h1 { margin: 0; font-size: 24px; letter-spacing: 2px; color: var(--primary-text); }
+
+        /* 主要內容區 (改為適應手機版面) */
+        .main-container { display: flex; flex-direction: column; flex: 1; padding: 15px; gap: 15px; overflow-y: auto; padding-bottom: 100px; }
+
+        /* 菜單區 */
+        .menu-container { padding: 20px; border-radius: 20px; }
+        .category-title { font-size: 20px; font-weight: 700; margin: 15px 0 10px 0; padding-bottom: 8px; border-bottom: 2px solid var(--accent-gold); display: inline-block; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+        
+        .menu-item { 
+            padding: 12px; text-align: center; cursor: pointer; transition: all 0.3s ease; 
+            background: white; border-radius: 16px; border: 2px solid transparent; position: relative;
+        }
+        .menu-item:hover { transform: translateY(-5px); border-color: var(--accent-gold); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15); }
+        .item-image { width: 100%; height: 120px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; }
+        .item-name { font-weight: 700; font-size: 15px; margin-bottom: 5px; }
+        .item-price { color: var(--accent-gold); font-weight: 700; font-size: 14px; }
+
+        /* 購物車區 */
+        .cart-container { padding: 20px; border-radius: 20px; }
+        .cart-header { font-size: 20px; font-weight: 700; margin-bottom: 15px; text-align: center; }
+        .cart-items { max-height: 300px; overflow-y: auto; padding-right: 5px; }
+        .cart-item { background: white; border-radius: 12px; padding: 12px; margin-bottom: 10px; border-left: 4px solid var(--accent-gold); }
+        .cart-item-header { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 5px; font-size: 15px; }
+        .cart-item-details { font-size: 12px; color: #7f8c8d; margin-bottom: 8px; }
+        .remove-btn { background: #ffeaa7; color: #d63031; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-weight: bold; font-size: 12px; }
+        
+        .cart-footer { margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc; }
+        .total-price { font-size: 20px; font-weight: 700; text-align: right; color: var(--primary-text); margin-bottom: 15px; }
+        .checkout-btn { width: 100%; padding: 15px; background: var(--primary-text); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; letter-spacing: 1px; }
+
+        /* ✨ 月光占卜按鈕 */
+        .magic-btn {
+            position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #fff 0%, #f1f2f6 100%);
+            border: 2px solid var(--accent-gold); border-radius: 50px; padding: 10px 20px;
+            font-size: 14px; font-weight: bold; color: var(--accent-gold); cursor: pointer;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); z-index: 100;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+
+        /* 占卜結果視窗 */
+        .oracle-content { text-align: center; }
+        .oracle-moon { font-size: 50px; margin-bottom: 10px; animation: glow 2s alternate infinite; }
+        @keyframes glow { from { text-shadow: 0 0 10px #fff, 0 0 20px #e60073; } to { text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6; } }
+        .oracle-text { font-size: 16px; line-height: 1.5; margin-bottom: 15px; font-weight: bold; color: #555; }
+        .oracle-drink { font-size: 20px; color: var(--accent-gold); font-weight: 900; margin-bottom: 15px; border: 2px dashed var(--accent-gold); padding: 10px; border-radius: 10px;}
+
+        /* 共用 Modal 樣式 */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.4); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); }
+        .modal-content { width: 90%; max-width: 400px; padding: 25px; max-height: 85vh; overflow-y: auto; }
+        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 15px; color: var(--primary-text); text-align: center; }
+        .option-group { margin-bottom: 15px; }
+        .option-title { font-weight: 700; margin-bottom: 8px; font-size: 14px; }
+        .radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; }
+        .radio-label, .checkbox-label { padding: 6px 12px; background: white; border: 1px solid #ddd; border-radius: 20px; font-size: 13px; user-select: none; }
+        input[type="radio"]:checked + .radio-label, input[type="checkbox"]:checked + .checkbox-label { background: var(--accent-gold); color: white; border-color: var(--accent-gold); }
+        .qty-controller { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 15px 0; }
+        .qty-btn { background: white; border: 1px solid #ccc; width: 30px; height: 30px; border-radius: 50%; font-size: 18px; display:flex; justify-content:center; align-items:center; }
+        .modal-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.1); }
+        .cancel-btn, .confirm-btn { padding: 8px 15px; border-radius: 10px; border: none; font-weight: bold; font-size:14px; }
+        .cancel-btn { background: #f1f2f6; color: #333; }
+        .confirm-btn { background: var(--accent-gold); color: white; }
+
+        /* ==========================================
+           🔒 裝置與掃碼限制阻擋畫面 CSS
+           ========================================== */
+        #security-blocker {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color); z-index: 99999; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 30px;
+        }
+        .blocker-icon { font-size: 60px; margin-bottom: 20px; }
+        .blocker-title { font-size: 22px; font-weight: bold; color: var(--primary-text); margin-bottom: 15px; }
+        .blocker-text { font-size: 15px; color: #666; line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+    <div id="security-blocker">
+        <div class="blocker-icon">📱</div>
+        <div class="blocker-title">專屬月光特調，僅限來店品嚐</div>
+        <div class="blocker-text">
+            為了確保飲品品質與新鮮度，本系統<b>不開放電腦版網頁下單</b>。<br><br>
+            請您親臨「白月光甜蜜制販所 (鳳山青年店)」，<br>並使用手機掃描現場桌邊的 QR Code 進行點餐喔！<br><br>期待您的光臨 🌙
+        </div>
+    </div>
+
+    <header>
+        <img src="https://images.unsplash.com/photo-1514534431238-66b962386121?w=150&h=150&fit=crop" alt="白月光 Logo" class="logo-img">
+        <h1>白月光甜蜜制販所</h1>
+    </header>
+
+    <div class="main-container">
+        <div class="menu-container glass-panel">
+            <div id="menu-display"></div>
+        </div>
+
+        <div class="cart-container glass-panel">
+            <div class="cart-header">🛒 專屬訂單</div>
+            <div class="cart-items" id="cart-items">
+                <p style="text-align:center; color:#a4b0be; margin-top:20px; font-size:13px;">您的購物車像今晚的夜空一樣空曠...</p>
+            </div>
+            <div class="cart-footer">
+                <div class="total-price">網頁小計: $<span id="total-price">0</span></div>
+                <button class="checkout-btn" id="checkout-btn" onclick="checkout()">送出訂單</button>
+            </div>
+        </div>
+    </div>
+
+    <button class="magic-btn" onclick="openOracle()">🔮 月光靈藥占卜</button>
+
+    <div class="modal-overlay" id="oracleModal">
+        <div class="modal-content glass-panel oracle-content">
+            <div class="oracle-moon">🌕</div>
+            <div class="modal-title">月光的神奇指引</div>
+            <div class="oracle-text" id="oracle-text">正在讀取星象...</div>
+            <div class="oracle-drink" id="oracle-drink"></div>
+            <div class="modal-footer" style="justify-content: center; gap: 15px;">
+                <button class="cancel-btn" onclick="closeOracle()">再想一下</button>
+                <button class="confirm-btn" onclick="acceptOracle()" id="oracle-accept-btn">就喝這個！</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="itemModal">
+        <div class="modal-content glass-panel">
+            <div class="modal-title" id="modal-item-name">商品名稱</div>
+            <div class="option-group"><div class="option-title">❄️ 冰量</div><div class="radio-group" id="ice-options"></div></div>
+            <div class="option-group"><div class="option-title">🍬 甜度</div><div class="radio-group" id="sugar-options"></div></div>
+            <div class="option-group"><div class="option-title">✨ 加料</div><div class="checkbox-group" id="topping-options"></div></div>
+            <div class="qty-controller">
+                <button class="qty-btn" onclick="changeQty(-1)">-</button>
+                <span id="modal-qty" style="font-size: 18px; font-weight: bold;">1</span>
+                <button class="qty-btn" onclick="changeQty(1)">+</button>
+            </div>
+            <div class="modal-footer">
+                <div style="font-size: 16px; font-weight: bold; color: var(--accent-gold);">小計: $<span id="modal-subtotal">0</span></div>
+                <div><button class="cancel-btn" onclick="closeModal()">取消</button><button class="confirm-btn" onclick="confirmAddToCart()">加入</button></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 🔒 雙重驗證鎖：裝置檢查與 QR Code 參數檢查
+        // ==========================================
+        function checkAccess() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 800;
+            const urlParams = new URLSearchParams(window.location.search);
+            const hasSecretKey = urlParams.get('source') === 'qrcode';
+            const blocker = document.getElementById('security-blocker');
+
+            if (!isMobile || !hasSecretKey) {
+                blocker.style.display = 'flex'; 
+                document.body.style.overflow = 'hidden'; 
+            } else {
+                blocker.style.display = 'none'; 
+                document.body.style.overflow = 'auto';
+            }
+        }
+        // 網頁一載入就立刻執行檢查
+        checkAccess();
+
+        // ==========================================
+        // 📦 系統資料庫 (含 ID)
+        // ==========================================
+        const defaultImg = "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop"; 
+        
+        const menuData = [
+            {
+                category: "✨ 月光現萃",
+                items: [
+                    { id: "tea_01", name: "阿楚姑娘", price: 52, image: defaultImg },
+                    { id: "tea_02", name: "蜜甜洋甘菊", price: 59, image: defaultImg },
+                    { id: "tea_03", name: "雪藏奶蓋茉香綠", price: 65, image: "https://images.unsplash.com/photo-1576092762791-dd9e2220afa1?w=400&h=300&fit=crop" }
+                ]
+            },
+            {
+                category: "👍 星光鮮奶",
+                items: [
+                    { id: "milk_01", name: "白月光醇厚奶茶", price: 72, image: "https://images.unsplash.com/photo-1517093602195-b40af9688b46?w=400&h=300&fit=crop" },
+                    { id: "milk_02", name: "山茶花醇厚奶茶", price: 72, image: defaultImg },
+                    { id: "milk_03", name: "楚楚拿鐵", price: 75, image: defaultImg },
+                    { id: "milk_04", name: "山茶花觀音奶茶", price: 64, image: defaultImg }
+                ]
+            },
+            {
+                category: "🌟 陽光如果",
+                items: [
+                    { id: "fruit_01", name: "陽光柳橙綠", price: 68, image: "https://images.unsplash.com/photo-1497534446932-c925b458314e?w=400&h=300&fit=crop" },
+                    { id: "fruit_02", name: "大桔大綠", price: 59, image: defaultImg }
+                ]
+            }
+        ];
+
+        const iceLevels = ["正常冰", "少冰", "微冰", "去冰", "溫", "熱"];
+        const sugarLevels = ["正常糖", "少糖", "半糖", "微糖", "無糖"];
+        const toppings = [ 
+            { id: "top_01", name: "白玉珍珠", price: 10 }, 
+            { id: "top_02", name: "椰果", price: 10 }, 
+            { id: "top_03", name: "山茶花凍", price: 15 } 
+        ];
+
+        let cart = [];
+        let currentEditingItem = null;
+        let currentQty = 1;
+        let oracleResult = null;
+
+        function init() {
+            renderMenu();
+            renderOptions('ice-options', iceLevels, 'ice', 'radio');
+            renderOptions('sugar-options', sugarLevels, 'sugar', 'radio');
+            renderToppings();
+        }
+
+        function renderMenu() {
+            const display = document.getElementById('menu-display');
+            menuData.forEach(cat => {
+                display.innerHTML += `<div class="category-title">${cat.category}</div>`;
+                const grid = document.createElement('div');
+                grid.className = 'menu-grid';
+                cat.items.forEach(item => {
+                    grid.innerHTML += `
+                        <div class="menu-item" onclick='openModal(${JSON.stringify(item)})'>
+                            <img src="${item.image}" alt="${item.name}" class="item-image">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-price">$${item.price}</div>
+                        </div>
+                    `;
+                });
+                display.appendChild(grid);
+            });
+        }
+
+        function renderOptions(containerId, options, name, type) {
+            const container = document.getElementById(containerId);
+            options.forEach((opt, index) => {
+                const checked = index === 0 ? "checked" : "";
+                container.innerHTML += `<label><input type="${type}" name="${name}" value="${opt}" ${checked}><div class="radio-label">${opt}</div></label>`;
+            });
+        }
+
+        function renderToppings() {
+            const container = document.getElementById('topping-options');
+            toppings.forEach(top => {
+                container.innerHTML += `<label><input type="checkbox" class="topping-checkbox" value="${top.price}" data-id="${top.id}" data-name="${top.name}" onchange="updateModalPrice()"><div class="checkbox-label">${top.name} (+$${top.price})</div></label>`;
+            });
+        }
+
+        // ==========================================
+        // 🔮 月光占卜系統
+        // ==========================================
+        const oracleQuotes = [
+            "今日運勢：宜溫柔。月光為您調製了專屬的心靈慰藉。",
+            "星星說你今天很努力了，這杯是給你的特別獎勵。",
+            "猶豫不決時，就交給命運的安排吧！這杯絕對讓你驚艷。",
+            "月色真美，正適合搭配這杯充滿靈氣的特調。"
+        ];
+
+        function openOracle() {
+            const modal = document.getElementById('oracleModal');
+            const textEl = document.getElementById('oracle-text');
+            const drinkEl = document.getElementById('oracle-drink');
+            const btn = document.getElementById('oracle-accept-btn');
+            
+            modal.style.display = 'flex';
+            textEl.textContent = "🌙 正在讀取星象，傾聽月光的聲音...";
+            drinkEl.textContent = "✨ ... ✨";
+            btn.style.display = 'none'; 
+
+            setTimeout(() => {
+                const quote = oracleQuotes[Math.floor(Math.random() * oracleQuotes.length)];
+                const flatItems = menuData.flatMap(cat => cat.items);
+                const randomDrink = flatItems[Math.floor(Math.random() * flatItems.length)];
+                let randomTopping = null;
+                if (Math.random() > 0.5) randomTopping = toppings[Math.floor(Math.random() * toppings.length)];
+
+                oracleResult = { drink: randomDrink, topping: randomTopping };
+                textEl.textContent = quote;
+                drinkEl.innerHTML = randomDrink.name + (randomTopping ? ` <br><span style="font-size:14px; color:#999;">特別加持：${randomTopping.name}</span>` : "");
+                btn.style.display = 'inline-block';
+            }, 1500); 
+        }
+
+        function closeOracle() { document.getElementById('oracleModal').style.display = 'none'; }
+
+        function acceptOracle() {
+            let selectedToppings = [];
+            let toppingsTotal = 0;
+            if (oracleResult.topping) {
+                selectedToppings.push({ id: oracleResult.topping.id, name: oracleResult.topping.name });
+                toppingsTotal = oracleResult.topping.price;
+            }
+            cart.push({ 
+                cartItemId: Date.now(), productId: oracleResult.drink.id, name: oracleResult.drink.name, 
+                ice: "少冰", sugar: "微糖", toppings: selectedToppings, qty: 1, totalPrice: oracleResult.drink.price + toppingsTotal 
+            });
+            renderCart(); closeOracle();
+        }
+
+        // ==========================================
+        // 🛒 購物車與安全結帳邏輯
+        // ==========================================
+        function openModal(item) {
+            currentEditingItem = item; currentQty = 1;
+            document.getElementById('modal-item-name').textContent = item.name;
+            document.getElementById('modal-qty').textContent = currentQty;
+            document.querySelectorAll('.topping-checkbox').forEach(cb => cb.checked = false);
+            document.querySelector('input[name="ice"]:first-child').checked = true;
+            document.querySelector('input[name="sugar"]:first-child').checked = true;
+            updateModalPrice();
+            document.getElementById('itemModal').style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('itemModal').style.display = 'none'; }
+        function changeQty(amount) { currentQty += amount; if (currentQty < 1) currentQty = 1; document.getElementById('modal-qty').textContent = currentQty; updateModalPrice(); }
+        
+        function updateModalPrice() {
+    
