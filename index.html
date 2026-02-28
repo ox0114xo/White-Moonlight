@@ -357,4 +357,92 @@
 
         function acceptOracle() {
             let selectedToppings = [];
-   
+            let toppingsTotal = 0;
+            if (oracleResult.topping) {
+                selectedToppings.push({ id: oracleResult.topping.id, name: oracleResult.topping.name });
+                toppingsTotal = oracleResult.topping.price;
+            }
+            cart.push({ 
+                cartItemId: Date.now(), productId: oracleResult.drink.id, name: oracleResult.drink.name, 
+                ice: "少冰", sugar: "微糖", toppings: selectedToppings, qty: 1, totalPrice: oracleResult.drink.price + toppingsTotal 
+            });
+            renderCart(); closeOracle();
+        }
+
+        // ==========================================
+        // 🛒 購物車互動
+        // ==========================================
+        function openModal(item) {
+            currentEditingItem = item; currentQty = 1;
+            document.getElementById('modal-item-name').textContent = item.name;
+            document.getElementById('modal-qty').textContent = currentQty;
+            document.querySelectorAll('.topping-checkbox').forEach(cb => cb.checked = false);
+            document.querySelector('input[name="ice"]:first-child').checked = true;
+            document.querySelector('input[name="sugar"]:first-child').checked = true;
+            updateModalPrice();
+            document.getElementById('itemModal').style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('itemModal').style.display = 'none'; }
+        function changeQty(amount) { currentQty += amount; if (currentQty < 1) currentQty = 1; document.getElementById('modal-qty').textContent = currentQty; updateModalPrice(); }
+        
+        function updateModalPrice() {
+            let toppingsTotal = 0;
+            document.querySelectorAll('.topping-checkbox:checked').forEach(cb => toppingsTotal += parseInt(cb.value));
+            document.getElementById('modal-subtotal').textContent = (currentEditingItem.price + toppingsTotal) * currentQty;
+        }
+
+        function confirmAddToCart() {
+            const ice = document.querySelector('input[name="ice"]:checked').value;
+            const sugar = document.querySelector('input[name="sugar"]:checked').value;
+            let selectedToppings = []; let toppingsTotal = 0;
+            document.querySelectorAll('.topping-checkbox:checked').forEach(cb => {
+                selectedToppings.push({ id: cb.getAttribute('data-id'), name: cb.getAttribute('data-name') });
+                toppingsTotal += parseInt(cb.value);
+            });
+            cart.push({ cartItemId: Date.now(), productId: currentEditingItem.id, name: currentEditingItem.name, ice: ice, sugar: sugar, toppings: selectedToppings, qty: currentQty, totalPrice: (currentEditingItem.price + toppingsTotal) * currentQty });
+            renderCart(); closeModal();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            container.innerHTML = ''; let grandTotal = 0;
+            
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-cart">
+                        <div class="empty-cart-icon">🛍️</div>
+                        <div style="font-weight: bold; color: #7f8c8d;">購物車空空的耶</div>
+                        <div style="font-size: 12px; margin-top: 5px;">點擊上方的美味飲品加入清單吧！</div>
+                    </div>`;
+            } else {
+                cart.forEach((item, index) => {
+                    grandTotal += item.totalPrice;
+                    const topNames = item.toppings.map(t => t.name).join(', ');
+                    const topText = topNames ? ` + ${topNames}` : '';
+                    container.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-header">
+                                <span>${item.name} <span style="color:#D4AF37;">x${item.qty}</span></span>
+                                <span>$${item.totalPrice}</span>
+                            </div>
+                            <div class="cart-item-details">${item.ice} / ${item.sugar} ${topText}</div>
+                            <button class="remove-btn" onclick="removeItem(${index})">✕</button>
+                        </div>`;
+                });
+            }
+            document.getElementById('total-price').textContent = grandTotal;
+        }
+
+        function removeItem(index) { cart.splice(index, 1); renderCart(); }
+
+        async function checkout() {
+            if (cart.length === 0) return alert("清單是空的！請先點選上方飲品喔！");
+            alert(`✅ 訂單已送出！\n\n感謝光臨白月光甜蜜制販所！\n(此為展示模式，尚未連線至出單機)`);
+            cart = []; renderCart();
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
