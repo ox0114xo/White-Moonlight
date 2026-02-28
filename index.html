@@ -3,199 +3,270 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>白月光甜蜜制販所 - 終極美學點餐系統</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <title>白月光甜蜜制販所 - 豐富視覺版</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         /* ==========================================
-           🎨 白月光極致美學 CSS
+           🎨 白月光豐富視覺美學 CSS
            ========================================== */
         :root {
             --primary-text: #2c3e50; 
             --accent-gold: #D4AF37; 
-            --bg-color: #f8f9fa;
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.9);
-            --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            --accent-red: #ff4757;
+            --bg-gradient: linear-gradient(135deg, #f6f8f9 0%, #e5ebf0 100%);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.08);
         }
 
         * { box-sizing: border-box; font-family: 'Quicksand', 'Noto Serif TC', serif; scroll-behavior: smooth; }
         
         body { 
             margin: 0; padding: 0; color: var(--primary-text); height: 100vh; overflow: auto;
-            background: linear-gradient(-45deg, #fdfbfb, #ebedee, #f3e7e9, #e3eeff);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: var(--bg-gradient);
             display: flex; flex-direction: column;
+            position: relative;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        /* 浪漫的星屑背景裝飾 */
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#D4AF37 1px, transparent 1px), radial-gradient(#D4AF37 1px, transparent 1px);
+            background-size: 60px 60px; background-position: 0 0, 30px 30px;
+            opacity: 0.1; z-index: -1; pointer-events: none;
         }
 
         .glass-panel {
-            background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); border-radius: 20px;
+            background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.6); box-shadow: var(--glass-shadow); border-radius: 20px;
         }
 
+        /* 頂部導覽 (修復破圖，改用高質感純 CSS Logo) */
         header {
-            display: flex; align-items: center; justify-content: center; padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px); z-index: 10;
+            display: flex; align-items: center; padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.9); z-index: 10;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05); position: sticky; top: 0;
         }
         
-        .logo-img {
-            width: 50px; height: 50px; border-radius: 50%; object-fit: cover; margin-right: 15px;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        .css-logo {
+            width: 45px; height: 45px; border-radius: 50%; background: var(--primary-text);
+            display: flex; justify-content: center; align-items: center; font-size: 24px;
+            margin-right: 15px; box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            border: 2px solid var(--accent-gold);
         }
 
-        h1 { margin: 0; font-size: 24px; letter-spacing: 2px; color: var(--primary-text); }
+        header h1 { margin: 0; font-size: 20px; font-weight: 700; color: var(--primary-text); letter-spacing: 1px; }
+        header p { margin: 2px 0 0 0; font-size: 11px; color: #7f8c8d; letter-spacing: 1px;}
 
-        .main-container { display: flex; flex-direction: column; flex: 1; padding: 15px; gap: 15px; overflow-y: auto; padding-bottom: 100px; }
+        .main-container { display: flex; flex-direction: column; flex: 1; padding: 15px; gap: 20px; padding-bottom: 120px; }
 
-        .menu-container { padding: 20px; border-radius: 20px; }
-        .category-title { font-size: 20px; font-weight: 700; margin: 15px 0 10px 0; padding-bottom: 8px; border-bottom: 2px solid var(--accent-gold); display: inline-block; }
-        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
+        /* 🌟 豐富元素：活動橫幅 Banner */
+        .promo-banner {
+            background: linear-gradient(45deg, #2c3e50, #4ca1af); color: white;
+            border-radius: 20px; padding: 20px; display: flex; flex-direction: column; justify-content: center;
+            position: relative; overflow: hidden; box-shadow: 0 10px 20px rgba(44, 62, 80, 0.2);
+        }
+        .promo-banner::after { content: '🌙'; font-size: 80px; position: absolute; right: -10px; bottom: -20px; opacity: 0.2; }
+        .promo-badge { background: var(--accent-gold); color: white; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; align-self: flex-start; margin-bottom: 8px;}
+        .promo-title { font-size: 22px; font-weight: 700; margin: 0 0 5px 0; }
+        .promo-desc { font-size: 13px; margin: 0; opacity: 0.9; }
+
+        /* 菜單區 */
+        .menu-container { padding: 5px; }
+        .category-title { 
+            font-size: 18px; font-weight: 700; margin: 25px 0 15px 5px; 
+            display: flex; align-items: center; gap: 8px; color: var(--primary-text);
+        }
+        .category-title::before { content: ''; width: 4px; height: 18px; background: var(--accent-gold); border-radius: 4px; }
+        
+        .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; } /* 手機上強制顯示兩排，看起來更豐富 */
         
         .menu-item { 
-            padding: 12px; text-align: center; cursor: pointer; transition: all 0.3s ease; 
-            background: white; border-radius: 16px; border: 2px solid transparent; position: relative;
+            background: white; border-radius: 16px; padding: 10px; cursor: pointer; 
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04); position: relative;
+            display: flex; flex-direction: column;
         }
-        .menu-item:hover { transform: translateY(-5px); border-color: var(--accent-gold); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.15); }
-        .item-image { width: 100%; height: 120px; object-fit: cover; border-radius: 12px; margin-bottom: 10px; }
-        .item-name { font-weight: 700; font-size: 15px; margin-bottom: 5px; }
-        .item-price { color: var(--accent-gold); font-weight: 700; font-size: 14px; }
-
-        .cart-container { padding: 20px; border-radius: 20px; }
-        .cart-header { font-size: 20px; font-weight: 700; margin-bottom: 15px; text-align: center; }
-        .cart-items { max-height: 300px; overflow-y: auto; padding-right: 5px; }
-        .cart-item { background: white; border-radius: 12px; padding: 12px; margin-bottom: 10px; border-left: 4px solid var(--accent-gold); }
-        .cart-item-header { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 5px; font-size: 15px; }
-        .cart-item-details { font-size: 12px; color: #7f8c8d; margin-bottom: 8px; }
-        .remove-btn { background: #ffeaa7; color: #d63031; border: none; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-weight: bold; font-size: 12px; }
+        .menu-item:active { transform: scale(0.95); } /* 點擊時的果凍回彈 */
         
-        .cart-footer { margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc; }
-        .total-price { font-size: 20px; font-weight: 700; text-align: right; color: var(--primary-text); margin-bottom: 15px; }
-        .checkout-btn { width: 100%; padding: 15px; background: var(--primary-text); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; letter-spacing: 1px; }
+        .item-image { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 12px; margin-bottom: 10px; background: #eee;}
+        
+        /* 🌟 豐富元素：行銷標籤 */
+        .item-badge {
+            position: absolute; top: 15px; left: 5px; background: var(--accent-red); color: white;
+            padding: 4px 8px; border-radius: 8px 8px 8px 0; font-size: 11px; font-weight: bold;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2); z-index: 2;
+        }
+        .badge-gold { background: var(--accent-gold); }
 
+        .item-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; line-height: 1.3; }
+        .item-price { color: var(--accent-gold); font-weight: 700; font-size: 15px; margin-top: auto; }
+        .add-icon { position: absolute; bottom: 10px; right: 10px; width: 28px; height: 28px; background: var(--primary-text); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 16px; }
+
+        /* 購物車區 */
+        .cart-container { padding: 20px; }
+        .cart-header { font-size: 18px; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .cart-items { max-height: 350px; overflow-y: auto; }
+        .empty-cart { text-align: center; padding: 30px 10px; color: #95a5a6; }
+        .empty-cart-icon { font-size: 40px; margin-bottom: 10px; opacity: 0.5; }
+        
+        .cart-item { background: #f8f9fa; border-radius: 12px; padding: 15px; margin-bottom: 12px; position: relative; border: 1px solid #eee;}
+        .cart-item-header { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 5px; font-size: 15px; padding-right: 40px;}
+        .cart-item-details { font-size: 12px; color: #7f8c8d; line-height: 1.4; }
+        .remove-btn { position: absolute; top: 15px; right: 15px; background: #ffeaa7; color: #d63031; border: none; border-radius: 50%; width: 24px; height: 24px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-weight: bold; font-size: 14px; }
+        
+        .cart-footer { margin-top: 15px; padding-top: 15px; border-top: 2px dashed #eee; }
+        .total-price { font-size: 22px; font-weight: 700; text-align: right; color: var(--accent-red); margin-bottom: 15px; }
+        .checkout-btn { width: 100%; padding: 16px; background: var(--primary-text); color: white; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 15px rgba(44, 62, 80, 0.3); }
+
+        /* ✨ 月光占卜按鈕 (優化位置) */
         .magic-btn {
-            position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #fff 0%, #f1f2f6 100%);
-            border: 2px solid var(--accent-gold); border-radius: 50px; padding: 10px 20px;
+            position: fixed; bottom: 25px; right: 20px; background: linear-gradient(135deg, #fff 0%, #f1f2f6 100%);
+            border: 2px solid var(--accent-gold); border-radius: 50px; padding: 12px 20px;
             font-size: 14px; font-weight: bold; color: var(--accent-gold); cursor: pointer;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); z-index: 100;
-            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4); z-index: 100;
+            animation: float 3s ease-in-out infinite; display: flex; align-items: center; gap: 5px;
         }
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
 
-        .oracle-content { text-align: center; }
-        .oracle-moon { font-size: 50px; margin-bottom: 10px; animation: glow 2s alternate infinite; }
-        @keyframes glow { from { text-shadow: 0 0 10px #fff, 0 0 20px #e60073; } to { text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6; } }
-        .oracle-text { font-size: 16px; line-height: 1.5; margin-bottom: 15px; font-weight: bold; color: #555; }
-        .oracle-drink { font-size: 20px; color: var(--accent-gold); font-weight: 900; margin-bottom: 15px; border: 2px dashed var(--accent-gold); padding: 10px; border-radius: 10px;}
+        /* 共用 Modal 樣式 */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: none; justify-content: center; align-items: flex-end; z-index: 1000; backdrop-filter: blur(5px); }
+        .modal-content { width: 100%; max-width: 500px; background: white; padding: 25px; border-radius: 25px 25px 0 0; max-height: 85vh; overflow-y: auto; animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        
+        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; color: var(--primary-text); border-bottom: 1px solid #eee; padding-bottom: 15px;}
+        .option-group { margin-bottom: 18px; }
+        .option-title { font-weight: 700; margin-bottom: 10px; font-size: 14px; color: #555;}
+        .radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 10px; }
+        .radio-label, .checkbox-label { padding: 8px 16px; background: #f4f6f8; border: 1px solid transparent; border-radius: 10px; font-size: 14px; font-weight: 600; color: #555; transition: 0.2s;}
+        input[type="radio"]:checked + .radio-label, input[type="checkbox"]:checked + .checkbox-label { background: #fff8e1; color: var(--accent-gold); border-color: var(--accent-gold); }
+        
+        .qty-controller { display: flex; align-items: center; justify-content: center; gap: 20px; margin: 25px 0; background: #f8f9fa; padding: 10px; border-radius: 15px;}
+        .qty-btn { background: white; border: none; width: 35px; height: 35px; border-radius: 10px; font-size: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        .modal-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; }
+        .cancel-btn, .confirm-btn { padding: 14px 20px; border-radius: 12px; border: none; font-weight: bold; font-size:15px; flex: 1; }
+        .cancel-btn { background: #f1f2f6; color: #555; margin-right: 15px;}
+        .confirm-btn { background: var(--primary-text); color: white; box-shadow: 0 4px 10px rgba(44, 62, 80, 0.2);}
+        
+        /* 占卜視窗專用 */
+        .oracle-content { text-align: center; border-radius: 25px; align-self: center; width: 90%; margin-bottom: 20px; }
+        .oracle-moon { font-size: 60px; margin-bottom: 15px; animation: glow 2s alternate infinite; }
+        @keyframes glow { from { filter: drop-shadow(0 0 10px #D4AF37); } to { filter: drop-shadow(0 0 25px #D4AF37); } }
+        .oracle-drink { font-size: 22px; color: var(--accent-gold); font-weight: 900; margin: 20px 0; background: #fff8e1; padding: 15px; border-radius: 15px;}
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.4); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); }
-        .modal-content { width: 90%; max-width: 400px; padding: 25px; max-height: 85vh; overflow-y: auto; }
-        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 15px; color: var(--primary-text); text-align: center; }
-        .option-group { margin-bottom: 15px; }
-        .option-title { font-weight: 700; margin-bottom: 8px; font-size: 14px; }
-        .radio-group, .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; }
-        .radio-label, .checkbox-label { padding: 6px 12px; background: white; border: 1px solid #ddd; border-radius: 20px; font-size: 13px; user-select: none; }
-        input[type="radio"]:checked + .radio-label, input[type="checkbox"]:checked + .checkbox-label { background: var(--accent-gold); color: white; border-color: var(--accent-gold); }
-        .qty-controller { display: flex; align-items: center; justify-content: center; gap: 15px; margin: 15px 0; }
-        .qty-btn { background: white; border: 1px solid #ccc; width: 30px; height: 30px; border-radius: 50%; font-size: 18px; display:flex; justify-content:center; align-items:center; }
-        .modal-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.1); }
-        .cancel-btn, .confirm-btn { padding: 8px 15px; border-radius: 10px; border: none; font-weight: bold; font-size:14px; }
-        .cancel-btn { background: #f1f2f6; color: #333; }
-        .confirm-btn { background: var(--accent-gold); color: white; }
     </style>
 </head>
 <body>
+
     <header>
-        <img src="https://images.unsplash.com/photo-1514534431238-66b962386121?w=150&h=150&fit=crop" alt="白月光 Logo" class="logo-img">
-        <h1>白月光甜蜜制販所</h1>
+        <div class="css-logo">🌙</div>
+        <div>
+            <h1>白月光甜蜜制販所</h1>
+            <p>White Moonlight</p>
+        </div>
     </header>
 
     <div class="main-container">
-        <div class="menu-container glass-panel">
+        
+        <div class="promo-banner">
+            <div class="promo-badge">本月主打星</div>
+            <h2 class="promo-title">雪藏奶蓋茉香綠</h2>
+            <p class="promo-desc">綿密鹹甜奶蓋，遇上清雅茉莉<br>帶給您初戀般的夢幻滋味 ✨</p>
+        </div>
+
+        <div class="menu-container">
             <div id="menu-display"></div>
         </div>
 
         <div class="cart-container glass-panel">
-            <div class="cart-header">🛒 專屬訂單</div>
+            <div class="cart-header">🛒 我的訂單</div>
             <div class="cart-items" id="cart-items">
-                <p style="text-align:center; color:#a4b0be; margin-top:20px; font-size:13px;">您的購物車像今晚的夜空一樣空曠...</p>
+                <div class="empty-cart">
+                    <div class="empty-cart-icon">🛍️</div>
+                    <div style="font-weight: bold; color: #7f8c8d;">購物車空空的耶</div>
+                    <div style="font-size: 12px; margin-top: 5px;">點擊上方的美味飲品加入清單吧！</div>
+                </div>
             </div>
             <div class="cart-footer">
-                <div class="total-price">網頁小計: $<span id="total-price">0</span></div>
-                <button class="checkout-btn" id="checkout-btn" onclick="checkout()">送出訂單</button>
+                <div class="total-price">總計: $<span id="total-price">0</span></div>
+                <button class="checkout-btn" id="checkout-btn" onclick="checkout()">前往結帳</button>
             </div>
         </div>
     </div>
 
-    <button class="magic-btn" onclick="openOracle()">🔮 月光靈藥占卜</button>
+    <button class="magic-btn" onclick="openOracle()">🔮 靈藥占卜</button>
 
     <div class="modal-overlay" id="oracleModal">
-        <div class="modal-content glass-panel oracle-content">
+        <div class="modal-content oracle-content">
             <div class="oracle-moon">🌕</div>
-            <div class="modal-title">月光的神奇指引</div>
-            <div class="oracle-text" id="oracle-text">正在讀取星象...</div>
-            <div class="oracle-drink" id="oracle-drink"></div>
-            <div class="modal-footer" style="justify-content: center; gap: 15px;">
-                <button class="cancel-btn" onclick="closeOracle()">再想一下</button>
-                <button class="confirm-btn" onclick="acceptOracle()" id="oracle-accept-btn">就喝這個！</button>
+            <div class="modal-title" style="border:none;">月光的神奇指引</div>
+            <div id="oracle-text" style="color:#666; font-weight:bold;">正在讀取星象...</div>
+            <div class="oracle-drink" id="oracle-drink" style="display:none;"></div>
+            <div class="modal-footer" id="oracle-btns" style="display:none; gap:10px;">
+                <button class="cancel-btn" style="margin:0;" onclick="closeOracle()">重抽一次</button>
+                <button class="confirm-btn" style="background:var(--accent-gold);" onclick="acceptOracle()">就喝這個！</button>
             </div>
         </div>
     </div>
 
     <div class="modal-overlay" id="itemModal">
-        <div class="modal-content glass-panel">
+        <div class="modal-content">
             <div class="modal-title" id="modal-item-name">商品名稱</div>
-            <div class="option-group"><div class="option-title">❄️ 冰量</div><div class="radio-group" id="ice-options"></div></div>
-            <div class="option-group"><div class="option-title">🍬 甜度</div><div class="radio-group" id="sugar-options"></div></div>
-            <div class="option-group"><div class="option-title">✨ 加料</div><div class="checkbox-group" id="topping-options"></div></div>
+            <div class="option-group"><div class="option-title">❄️ 冰量 (必選)</div><div class="radio-group" id="ice-options"></div></div>
+            <div class="option-group"><div class="option-title">🍬 甜度 (必選)</div><div class="radio-group" id="sugar-options"></div></div>
+            <div class="option-group"><div class="option-title">✨ 升級加料</div><div class="checkbox-group" id="topping-options"></div></div>
+            
             <div class="qty-controller">
                 <button class="qty-btn" onclick="changeQty(-1)">-</button>
-                <span id="modal-qty" style="font-size: 18px; font-weight: bold;">1</span>
+                <span id="modal-qty" style="font-size: 20px; font-weight: 900; width: 30px; text-align: center;">1</span>
                 <button class="qty-btn" onclick="changeQty(1)">+</button>
             </div>
+            
             <div class="modal-footer">
-                <div style="font-size: 16px; font-weight: bold; color: var(--accent-gold);">小計: $<span id="modal-subtotal">0</span></div>
-                <div><button class="cancel-btn" onclick="closeModal()">取消</button><button class="confirm-btn" onclick="confirmAddToCart()">加入</button></div>
+                <button class="cancel-btn" onclick="closeModal()">取消</button>
+                <button class="confirm-btn" onclick="confirmAddToCart()">加入購物車 $<span id="modal-subtotal">0</span></button>
             </div>
         </div>
     </div>
 
     <script>
-        const defaultImg = "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop"; 
+        // ==========================================
+        // 📦 豐富版系統資料庫 (加入高畫質圖片與熱銷標籤)
+        // ==========================================
+        // 為了讓畫面好看，我準備了高品質的免費圖庫圖片
+        const imgBoba = "https://images.unsplash.com/photo-1558857563-b371034b7dc8?w=400&q=80"; 
+        const imgFruit = "https://images.unsplash.com/photo-1497534446932-c925b458314e?w=400&q=80";
+        const imgTea = "https://images.unsplash.com/photo-1576092762791-dd9e2220afa1?w=400&q=80";
+        const imgMilk = "https://images.unsplash.com/photo-1517093602195-b40af9688b46?w=400&q=80";
         
         const menuData = [
             {
                 category: "✨ 月光現萃",
                 items: [
-                    { id: "tea_01", name: "阿楚姑娘", price: 52, image: defaultImg },
-                    { id: "tea_02", name: "蜜甜洋甘菊", price: 59, image: defaultImg },
-                    { id: "tea_03", name: "雪藏奶蓋茉香綠", price: 65, image: "https://images.unsplash.com/photo-1576092762791-dd9e2220afa1?w=400&h=300&fit=crop" }
+                    { id: "tea_03", name: "雪藏奶蓋茉香綠", price: 65, image: imgTea, badge: "🔥 熱銷" },
+                    { id: "tea_01", name: "阿楚姑娘", price: 52, image: imgTea },
+                    { id: "tea_02", name: "蜜甜洋甘菊", price: 59, image: imgTea }
                 ]
             },
             {
                 category: "👍 星光鮮奶",
                 items: [
-                    { id: "milk_01", name: "白月光醇厚奶茶", price: 72, image: "https://images.unsplash.com/photo-1517093602195-b40af9688b46?w=400&h=300&fit=crop" },
-                    { id: "milk_02", name: "山茶花醇厚奶茶", price: 72, image: defaultImg },
-                    { id: "milk_03", name: "楚楚拿鐵", price: 75, image: defaultImg },
-                    { id: "milk_04", name: "山茶花觀音奶茶", price: 64, image: defaultImg }
+                    { id: "milk_01", name: "白月光醇厚奶茶", price: 72, image: imgMilk, badge: "✨ 推薦", badgeClass: "badge-gold" },
+                    { id: "milk_02", name: "山茶花醇厚奶茶", price: 72, image: imgMilk },
+                    { id: "milk_03", name: "楚楚拿鐵", price: 75, image: imgMilk },
+                    { id: "milk_04", name: "黑糖珍珠鮮奶", price: 80, image: imgBoba, badge: "🔥 人氣" }
                 ]
             },
             {
                 category: "🌟 陽光如果",
                 items: [
-                    { id: "fruit_01", name: "陽光柳橙綠", price: 68, image: "https://images.unsplash.com/photo-1497534446932-c925b458314e?w=400&h=300&fit=crop" },
-                    { id: "fruit_02", name: "大桔大綠", price: 59, image: defaultImg }
+                    { id: "fruit_01", name: "陽光柳橙綠", price: 68, image: imgFruit, badge: "🍋 鮮榨" },
+                    { id: "fruit_02", name: "大桔大綠", price: 59, image: imgFruit }
                 ]
             }
         ];
 
-        const iceLevels = ["正常冰", "少冰", "微冰", "去冰", "溫", "熱"];
+        const iceLevels = ["正常冰", "少冰", "微冰", "去冰", "常溫"];
         const sugarLevels = ["正常糖", "少糖", "半糖", "微糖", "無糖"];
         const toppings = [ 
             { id: "top_01", name: "白玉珍珠", price: 10 }, 
@@ -222,11 +293,14 @@
                 const grid = document.createElement('div');
                 grid.className = 'menu-grid';
                 cat.items.forEach(item => {
+                    const badgeHtml = item.badge ? `<div class="item-badge ${item.badgeClass || ''}">${item.badge}</div>` : '';
                     grid.innerHTML += `
                         <div class="menu-item" onclick='openModal(${JSON.stringify(item)})'>
-                            <img src="${item.image}" alt="${item.name}" class="item-image">
+                            ${badgeHtml}
+                            <img src="${item.image}" alt="${item.name}" class="item-image" loading="lazy">
                             <div class="item-name">${item.name}</div>
                             <div class="item-price">$${item.price}</div>
+                            <div class="add-icon">+</div>
                         </div>
                     `;
                 });
@@ -245,112 +319,42 @@
         function renderToppings() {
             const container = document.getElementById('topping-options');
             toppings.forEach(top => {
-                container.innerHTML += `<label><input type="checkbox" class="topping-checkbox" value="${top.price}" data-id="${top.id}" data-name="${top.name}" onchange="updateModalPrice()"><div class="checkbox-label">${top.name} (+$${top.price})</div></label>`;
+                container.innerHTML += `<label><input type="checkbox" class="topping-checkbox" value="${top.price}" data-id="${top.id}" data-name="${top.name}" onchange="updateModalPrice()"><div class="checkbox-label">+ ${top.name} $${top.price}</div></label>`;
             });
         }
 
+        // ==========================================
+        // 🔮 月光占卜系統 (動畫優化)
+        // ==========================================
         const oracleQuotes = [
             "今日運勢：宜溫柔。月光為您調製了專屬的心靈慰藉。",
             "星星說你今天很努力了，這杯是給你的特別獎勵。",
-            "猶豫不決時，就交給命運的安排吧！這杯絕對讓你驚艷。",
-            "月色真美，正適合搭配這杯充滿靈氣的特調。"
+            "猶豫不決時，就交給命運的安排吧！這杯絕對讓你驚艷。"
         ];
 
         function openOracle() {
-            const modal = document.getElementById('oracleModal');
-            const textEl = document.getElementById('oracle-text');
-            const drinkEl = document.getElementById('oracle-drink');
-            const btn = document.getElementById('oracle-accept-btn');
-            
-            modal.style.display = 'flex';
-            textEl.textContent = "🌙 正在讀取星象，傾聽月光的聲音...";
-            drinkEl.textContent = "✨ ... ✨";
-            btn.style.display = 'none'; 
+            document.getElementById('oracleModal').style.display = 'flex';
+            document.getElementById('oracle-text').textContent = "🌙 正在讀取星象...";
+            document.getElementById('oracle-drink').style.display = 'none';
+            document.getElementById('oracle-btns').style.display = 'none';
 
             setTimeout(() => {
                 const quote = oracleQuotes[Math.floor(Math.random() * oracleQuotes.length)];
                 const flatItems = menuData.flatMap(cat => cat.items);
                 const randomDrink = flatItems[Math.floor(Math.random() * flatItems.length)];
-                let randomTopping = null;
-                if (Math.random() > 0.5) randomTopping = toppings[Math.floor(Math.random() * toppings.length)];
+                let randomTopping = Math.random() > 0.5 ? toppings[Math.floor(Math.random() * toppings.length)] : null;
 
                 oracleResult = { drink: randomDrink, topping: randomTopping };
-                textEl.textContent = quote;
-                drinkEl.innerHTML = randomDrink.name + (randomTopping ? ` <br><span style="font-size:14px; color:#999;">特別加持：${randomTopping.name}</span>` : "");
-                btn.style.display = 'inline-block';
-            }, 1500); 
+                
+                document.getElementById('oracle-text').textContent = quote;
+                document.getElementById('oracle-drink').style.display = 'block';
+                document.getElementById('oracle-drink').innerHTML = randomDrink.name + (randomTopping ? ` <br><span style="font-size:14px; color:#999; display:inline-block; margin-top:5px;">特別加持：${randomTopping.name}</span>` : "");
+                document.getElementById('oracle-btns').style.display = 'flex';
+            }, 1200); 
         }
 
         function closeOracle() { document.getElementById('oracleModal').style.display = 'none'; }
 
         function acceptOracle() {
             let selectedToppings = [];
-            let toppingsTotal = 0;
-            if (oracleResult.topping) {
-                selectedToppings.push({ id: oracleResult.topping.id, name: oracleResult.topping.name });
-                toppingsTotal = oracleResult.topping.price;
-            }
-            cart.push({ 
-                cartItemId: Date.now(), productId: oracleResult.drink.id, name: oracleResult.drink.name, 
-                ice: "少冰", sugar: "微糖", toppings: selectedToppings, qty: 1, totalPrice: oracleResult.drink.price + toppingsTotal 
-            });
-            renderCart(); closeOracle();
-        }
-
-        function openModal(item) {
-            currentEditingItem = item; currentQty = 1;
-            document.getElementById('modal-item-name').textContent = item.name;
-            document.getElementById('modal-qty').textContent = currentQty;
-            document.querySelectorAll('.topping-checkbox').forEach(cb => cb.checked = false);
-            document.querySelector('input[name="ice"]:first-child').checked = true;
-            document.querySelector('input[name="sugar"]:first-child').checked = true;
-            updateModalPrice();
-            document.getElementById('itemModal').style.display = 'flex';
-        }
-
-        function closeModal() { document.getElementById('itemModal').style.display = 'none'; }
-        function changeQty(amount) { currentQty += amount; if (currentQty < 1) currentQty = 1; document.getElementById('modal-qty').textContent = currentQty; updateModalPrice(); }
-        
-        function updateModalPrice() {
-            let toppingsTotal = 0;
-            document.querySelectorAll('.topping-checkbox:checked').forEach(cb => toppingsTotal += parseInt(cb.value));
-            document.getElementById('modal-subtotal').textContent = (currentEditingItem.price + toppingsTotal) * currentQty;
-        }
-
-        function confirmAddToCart() {
-            const ice = document.querySelector('input[name="ice"]:checked').value;
-            const sugar = document.querySelector('input[name="sugar"]:checked').value;
-            let selectedToppings = []; let toppingsTotal = 0;
-            document.querySelectorAll('.topping-checkbox:checked').forEach(cb => {
-                selectedToppings.push({ id: cb.getAttribute('data-id'), name: cb.getAttribute('data-name') });
-                toppingsTotal += parseInt(cb.value);
-            });
-            cart.push({ cartItemId: Date.now(), productId: currentEditingItem.id, name: currentEditingItem.name, ice: ice, sugar: sugar, toppings: selectedToppings, qty: currentQty, totalPrice: (currentEditingItem.price + toppingsTotal) * currentQty });
-            renderCart(); closeModal();
-        }
-
-        function renderCart() {
-            const container = document.getElementById('cart-items');
-            container.innerHTML = ''; let grandTotal = 0;
-            if (cart.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#a4b0be; margin-top:20px; font-size:13px;">您的購物車像今晚的夜空一樣空曠...</p>';
-            } else {
-                cart.forEach((item, index) => {
-                    grandTotal += item.totalPrice;
-                    const topNames = item.toppings.map(t => t.name).join(', ');
-                    const topText = topNames ? ` + ${topNames}` : '';
-                    container.innerHTML += `
-                        <div class="cart-item">
-                            <div class="cart-item-header"><span>${item.name} x ${item.qty}</span><span>$${item.totalPrice}</span></div>
-                            <div class="cart-item-details">規格：${item.ice} / ${item.sugar} ${topText}</div>
-                            <button class="remove-btn" onclick="removeItem(${index})">移除</button>
-                        </div>`;
-                });
-            }
-            document.getElementById('total-price').textContent = grandTotal;
-        }
-
-        function removeItem(index) { cart.splice(index, 1); renderCart(); }
-
-        async function checkout() {
-            if (cart.leng
+   
