@@ -39,7 +39,6 @@
             border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); border-radius: 20px;
         }
 
-        /* 頂部導覽與 Logo */
         header {
             display: flex; align-items: center; justify-content: center; padding: 15px 20px;
             background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px); z-index: 10;
@@ -52,10 +51,8 @@
 
         h1 { margin: 0; font-size: 24px; letter-spacing: 2px; color: var(--primary-text); }
 
-        /* 主要內容區 (改為適應手機版面) */
         .main-container { display: flex; flex-direction: column; flex: 1; padding: 15px; gap: 15px; overflow-y: auto; padding-bottom: 100px; }
 
-        /* 菜單區 */
         .menu-container { padding: 20px; border-radius: 20px; }
         .category-title { font-size: 20px; font-weight: 700; margin: 15px 0 10px 0; padding-bottom: 8px; border-bottom: 2px solid var(--accent-gold); display: inline-block; }
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; }
@@ -69,7 +66,6 @@
         .item-name { font-weight: 700; font-size: 15px; margin-bottom: 5px; }
         .item-price { color: var(--accent-gold); font-weight: 700; font-size: 14px; }
 
-        /* 購物車區 */
         .cart-container { padding: 20px; border-radius: 20px; }
         .cart-header { font-size: 20px; font-weight: 700; margin-bottom: 15px; text-align: center; }
         .cart-items { max-height: 300px; overflow-y: auto; padding-right: 5px; }
@@ -82,7 +78,6 @@
         .total-price { font-size: 20px; font-weight: 700; text-align: right; color: var(--primary-text); margin-bottom: 15px; }
         .checkout-btn { width: 100%; padding: 15px; background: var(--primary-text); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; letter-spacing: 1px; }
 
-        /* ✨ 月光占卜按鈕 */
         .magic-btn {
             position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #fff 0%, #f1f2f6 100%);
             border: 2px solid var(--accent-gold); border-radius: 50px; padding: 10px 20px;
@@ -92,14 +87,12 @@
         }
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
 
-        /* 占卜結果視窗 */
         .oracle-content { text-align: center; }
         .oracle-moon { font-size: 50px; margin-bottom: 10px; animation: glow 2s alternate infinite; }
         @keyframes glow { from { text-shadow: 0 0 10px #fff, 0 0 20px #e60073; } to { text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6; } }
         .oracle-text { font-size: 16px; line-height: 1.5; margin-bottom: 15px; font-weight: bold; color: #555; }
         .oracle-drink { font-size: 20px; color: var(--accent-gold); font-weight: 900; margin-bottom: 15px; border: 2px dashed var(--accent-gold); padding: 10px; border-radius: 10px;}
 
-        /* 共用 Modal 樣式 */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.4); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(8px); }
         .modal-content { width: 90%; max-width: 400px; padding: 25px; max-height: 85vh; overflow-y: auto; }
         .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 15px; color: var(--primary-text); text-align: center; }
@@ -114,32 +107,9 @@
         .cancel-btn, .confirm-btn { padding: 8px 15px; border-radius: 10px; border: none; font-weight: bold; font-size:14px; }
         .cancel-btn { background: #f1f2f6; color: #333; }
         .confirm-btn { background: var(--accent-gold); color: white; }
-
-        /* ==========================================
-           🔒 裝置與掃碼限制阻擋畫面 CSS
-           ========================================== */
-        #security-blocker {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-color); z-index: 99999; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 30px;
-        }
-        .blocker-icon { font-size: 60px; margin-bottom: 20px; }
-        .blocker-title { font-size: 22px; font-weight: bold; color: var(--primary-text); margin-bottom: 15px; }
-        .blocker-text { font-size: 15px; color: #666; line-height: 1.6; }
     </style>
 </head>
 <body>
-
-    <div id="security-blocker">
-        <div class="blocker-icon">📱</div>
-        <div class="blocker-title">專屬月光特調，僅限來店品嚐</div>
-        <div class="blocker-text">
-            為了確保飲品品質與新鮮度，本系統<b>不開放電腦版網頁下單</b>。<br><br>
-            請您親臨「白月光甜蜜制販所 (鳳山青年店)」，<br>並使用手機掃描現場桌邊的 QR Code 進行點餐喔！<br><br>期待您的光臨 🌙
-        </div>
-    </div>
-
     <header>
         <img src="https://images.unsplash.com/photo-1514534431238-66b962386121?w=150&h=150&fit=crop" alt="白月光 Logo" class="logo-img">
         <h1>白月光甜蜜制販所</h1>
@@ -196,40 +166,6 @@
     </div>
 
     <script>
-        // ==========================================
-        // 🔒 雙重驗證鎖 (老闆專屬秘密通道版)
-        // ==========================================
-        function checkAccess() {
-            const currentUrl = window.location.href;
-            const blocker = document.getElementById('security-blocker');
-
-            // 👑 老闆專屬秘密通道：只要網址有 boss=moonlight，直接解鎖！
-            if (currentUrl.includes('boss=moonlight')) {
-                blocker.style.display = 'none'; 
-                document.body.style.overflow = 'auto';
-                return; // 直接結束檢查，讓你暢通無阻
-            }
-
-            // --- 以下是原本給客人的嚴格檢查 ---
-            const width = window.innerWidth;
-            const ua = navigator.userAgent;
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua) || width <= 1024;
-            const hasSecretKey = currentUrl.includes('source=qrcode');
-
-            if (!isMobile || !hasSecretKey) {
-                blocker.style.display = 'flex'; 
-                document.body.style.overflow = 'hidden'; 
-            } else {
-                blocker.style.display = 'none'; 
-                document.body.style.overflow = 'auto';
-            }
-        }
-        // 網頁一載入就立刻執行檢查
-        checkAccess();
-
-        // ==========================================
-        // 📦 系統資料庫 (含 ID)
-        // ==========================================
         const defaultImg = "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop"; 
         
         const menuData = [
@@ -313,9 +249,6 @@
             });
         }
 
-        // ==========================================
-        // 🔮 月光占卜系統
-        // ==========================================
         const oracleQuotes = [
             "今日運勢：宜溫柔。月光為您調製了專屬的心靈慰藉。",
             "星星說你今天很努力了，這杯是給你的特別獎勵。",
@@ -364,9 +297,6 @@
             renderCart(); closeOracle();
         }
 
-        // ==========================================
-        // 🛒 購物車與安全結帳邏輯
-        // ==========================================
         function openModal(item) {
             currentEditingItem = item; currentQty = 1;
             document.getElementById('modal-item-name').textContent = item.name;
@@ -375,4 +305,52 @@
             document.querySelector('input[name="ice"]:first-child').checked = true;
             document.querySelector('input[name="sugar"]:first-child').checked = true;
             updateModalPrice();
-            document.getE
+            document.getElementById('itemModal').style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('itemModal').style.display = 'none'; }
+        function changeQty(amount) { currentQty += amount; if (currentQty < 1) currentQty = 1; document.getElementById('modal-qty').textContent = currentQty; updateModalPrice(); }
+        
+        function updateModalPrice() {
+            let toppingsTotal = 0;
+            document.querySelectorAll('.topping-checkbox:checked').forEach(cb => toppingsTotal += parseInt(cb.value));
+            document.getElementById('modal-subtotal').textContent = (currentEditingItem.price + toppingsTotal) * currentQty;
+        }
+
+        function confirmAddToCart() {
+            const ice = document.querySelector('input[name="ice"]:checked').value;
+            const sugar = document.querySelector('input[name="sugar"]:checked').value;
+            let selectedToppings = []; let toppingsTotal = 0;
+            document.querySelectorAll('.topping-checkbox:checked').forEach(cb => {
+                selectedToppings.push({ id: cb.getAttribute('data-id'), name: cb.getAttribute('data-name') });
+                toppingsTotal += parseInt(cb.value);
+            });
+            cart.push({ cartItemId: Date.now(), productId: currentEditingItem.id, name: currentEditingItem.name, ice: ice, sugar: sugar, toppings: selectedToppings, qty: currentQty, totalPrice: (currentEditingItem.price + toppingsTotal) * currentQty });
+            renderCart(); closeModal();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            container.innerHTML = ''; let grandTotal = 0;
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#a4b0be; margin-top:20px; font-size:13px;">您的購物車像今晚的夜空一樣空曠...</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    grandTotal += item.totalPrice;
+                    const topNames = item.toppings.map(t => t.name).join(', ');
+                    const topText = topNames ? ` + ${topNames}` : '';
+                    container.innerHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-header"><span>${item.name} x ${item.qty}</span><span>$${item.totalPrice}</span></div>
+                            <div class="cart-item-details">規格：${item.ice} / ${item.sugar} ${topText}</div>
+                            <button class="remove-btn" onclick="removeItem(${index})">移除</button>
+                        </div>`;
+                });
+            }
+            document.getElementById('total-price').textContent = grandTotal;
+        }
+
+        function removeItem(index) { cart.splice(index, 1); renderCart(); }
+
+        async function checkout() {
+            if (cart.leng
