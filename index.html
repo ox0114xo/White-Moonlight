@@ -197,26 +197,25 @@
 
     <script>
         // ==========================================
-        // 🔒 雙重驗證鎖 (放寬條件並加入除錯模式)
+        // 🔒 雙重驗證鎖 (老闆專屬秘密通道版)
         // ==========================================
         function checkAccess() {
-            const width = window.innerWidth;
-            const ua = navigator.userAgent;
-            // 放寬手機判定條件，將寬度調高到 1024，並加入 Mobile 關鍵字
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua) || width <= 1024;
-            
-            // 更寬鬆的網址檢查：只要網址中「包含」 source=qrcode 就算通過
             const currentUrl = window.location.href;
-            const hasSecretKey = currentUrl.includes('source=qrcode');
-            
             const blocker = document.getElementById('security-blocker');
 
-            // 💡 工程師除錯開關：如果網址最後有加 &debug=1 就會跳報告
-            if (currentUrl.includes('debug=1')) {
-                alert("🔍 系統偵測報告：\n1. 判定為手機？ " + isMobile + "\n(螢幕寬度: " + width + ")\n2. 鑰匙正確？ " + hasSecretKey + "\n(目前抓取的網址: " + currentUrl + ")");
+            // 👑 老闆專屬秘密通道：只要網址有 boss=moonlight，直接解鎖！
+            if (currentUrl.includes('boss=moonlight')) {
+                blocker.style.display = 'none'; 
+                document.body.style.overflow = 'auto';
+                return; // 直接結束檢查，讓你暢通無阻
             }
 
-            // 驗證機制
+            // --- 以下是原本給客人的嚴格檢查 ---
+            const width = window.innerWidth;
+            const ua = navigator.userAgent;
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile/i.test(ua) || width <= 1024;
+            const hasSecretKey = currentUrl.includes('source=qrcode');
+
             if (!isMobile || !hasSecretKey) {
                 blocker.style.display = 'flex'; 
                 document.body.style.overflow = 'hidden'; 
@@ -374,4 +373,6 @@
             document.getElementById('modal-qty').textContent = currentQty;
             document.querySelectorAll('.topping-checkbox').forEach(cb => cb.checked = false);
             document.querySelector('input[name="ice"]:first-child').checked = true;
-            document.querySelector(
+            document.querySelector('input[name="sugar"]:first-child').checked = true;
+            updateModalPrice();
+            document.getE
